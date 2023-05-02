@@ -49,4 +49,4 @@ You will be graded based on the sophistication of your program, including the fo
 1. Use of images to find locations to click
 2. Appropriate use of iteration and while loops
 3. Inclusion of decision making using if with logical (and/or) operations
-4. Use of functions to make your code more modular and break it into tasks
+4. Use of functions to make your code more modular and break it into tasks 
