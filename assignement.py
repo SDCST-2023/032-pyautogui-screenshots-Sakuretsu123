@@ -2,7 +2,6 @@
 import pyautogui
 import time 
 
-pyautogui.mouseInfo()
 '''
 sword merging simulator : https://www.crazygames.com/game/sword-merging-simulator
 command to plan :
@@ -25,43 +24,62 @@ accept rebirth
 
 def swords_screen(): 
     print('sword screen')
-    timer = time.time()
-    p = pyautogui.locateCenterOnScreen('bubble.PNG', confidence=0.9)
-    x, y = pyautogui.position(p)
-    if p != None:
-        y = y -200
-        pyautogui.moveTo(x, y)
-        pyautogui.mouseDown()
-        myList = [(x+100, y), (x+100, y+40), (x-100, y+40), (x-100, y)]
-        for i in myList : 
-            pyautogui.moveTo(i)
+    pyautogui.alert('sword screen')
+    m,n = pyautogui.locateCenterOnScreen('mainscreen.PNG', confidence = 0.9)
+    
+
+    pyautogui.moveTo(m,n)
+    pyautogui.click()
+    
+    x, y = pyautogui.locateCenterOnScreen('bubble.PNG', confidence=0.8)
+    pyautogui.alert(f"{x} {y}")
+
+    pyautogui.moveTo(x-350,y)
+    pyautogui.mouseDown()
+
+    myList = [(x-190, y), (x-190, y+40), (x-500, y+40), (x-500, y)]
+
+    for i in myList : 
+        pyautogui.moveTo(i, duration = 0.5)
+        
+
     pyautogui.mouseUp()
+
     merge = pyautogui.locateCenterOnScreen('mergetheswords.PNG', confidence=0.9)
+    p, l = pyautogui.locateCenterOnScreen('buysword.PNG', confidence=0.9)
+    
     if merge != None:
         pyautogui.moveTo(merge)
         pyautogui.click()
+        pyautogui.moveTo(p +50, l)
+        pyautogui.click(clicks = 5, duration= 1)
+    
         
-    now = time.time()
-    time.sleep(3)
+    
     monsters_hunt()
 
 def monsters_hunt(): 
     #while the screen thing is not 30/30 click on the monster
     #+ if sword icon is bright click on it
     print('monster-screen')
-    bubble = pyautogui.locateCenterOnScreen('bubblemax.PNG', confidence=0.9)
-    sword = pyautogui.locateCenterOnScreen('buysword.PNG', confidence=0.9)
-    monster = pyautogui.locateCenterOnScreen('killthemonsters.PNG', confidence=0.9)
-    x, y = pyautogui.position(monster)
-    y = y-50
-    while bubble == None: 
-        if sword != None: 
-            pyautogui.moveTo(sword)
-            pyautogui.click()
-        if sword == None: 
-            x, y = pyautogui.position(monster)
-            pyautogui.moveTo(x, y)
-            pyautogui.click()
+    
+
+    m,n = pyautogui.locateCenterOnScreen('monsterscreen.PNG', region=(420,470,580,625), confidence = 0.8)
+    countdown = 0
+    
+
+    pyautogui.moveTo(m,n)
+    pyautogui.click()
+
+    x, y  = monster = pyautogui.locateCenterOnScreen('killthemonster.PNG', confidence=0.9)
+
+    while countdown != 10: 
+        countdown += 1
+        if monster != None: 
+            pyautogui.moveTo(x +100, y)
+            pyautogui.click(clicks = 700)
+
+
     rebirth()
 
 
@@ -74,27 +92,33 @@ def monsters_hunt():
     
 
 def rebirth(): 
+    i= 0
+    i = i + 1
+    if i == 1 :
+        count = time.time()
+
     print('rebirth')
-    global counter 
     now = time.time()
-    if (counter - now) > 600 : 
-        x = pyautogui.locateCenterOnScreen('rebirthbutton.PNG', confidence=0.9)
-        y = pyautogui.locateCenterOnScreen('rebirthtool.PNG', confidence=0.9)
-        z = pyautogui.locateCenterOnScreen('yesbutton.PNG', confidence=0.9)
+    if (count - now) > 5 : 
+        x = pyautogui.locateCenterOnScreen('rebirthbutton.PNG', confidence=0.8)
+        y = pyautogui.locateCenterOnScreen('rebirthtool.PNG', confidence=0.8)
+        z = pyautogui.locateCenterOnScreen('yesbutton.PNG', confidence=0.8)
         pyautogui.moveTo(x)
         pyautogui.click()
         pyautogui.moveTo(y)
         pyautogui.click()
         pyautogui.moveTo(z)
         pyautogui.click()
+
     #if time.time - x > 600 
     #rebirth and follow instructions 
     
 
     swords_screen()
 
+
 if __name__ == "__main__":
     pyautogui.confirm('run?')
-    counter = time.time()
-    while True :
+    
+    while True:
         rebirth()
