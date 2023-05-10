@@ -23,15 +23,45 @@ accept rebirth
 
 
 def swords_screen(): 
-    time.sleep(1)
+    time.sleep(2)
     print('sword screen')
-    m,n = pyautogui.locateCenterOnScreen('mainscreen.PNG', confidence = 0.9)
+    valid = False
+    while not valid:
+        time.sleep(0.1)
+        try:
+            a = pyautogui.locateCenterOnScreen('mainscreen.PNG', confidence = 0.9)
+            b = pyautogui.locateCenterOnScreen('biggerswordscreen.PNG', confidence = 0.9)
+            if a is not None:
+                m,n = a
+            if b is not None:
+                m,n = b
+
+            valid = True
+        except:
+            valid = False
     
 
     pyautogui.moveTo(m,n)
     pyautogui.click()
+    time.sleep(1)
+    pyautogui.click()
     
-    x, y = pyautogui.locateCenterOnScreen('bubble.PNG', confidence=0.8)
+    time.sleep(0.1)
+
+    c = pyautogui.locateCenterOnScreen('bubble.PNG', confidence=0.8)
+    d = pyautogui.locateCenterOnScreen('newbubble.PNG', confidence = 0.8)
+    if c is not None:
+        x,y = c
+    if d is not None:
+        x,y = d
+        x = x+50
+        y = y-20
+    if c is None and d is None : 
+        x, y = (900,470)
+
+            
+        
+    
     
 
     pyautogui.moveTo(x-350,y)
@@ -40,7 +70,7 @@ def swords_screen():
     myList = [(x-190, y), (x-190, y+40), (x-500, y+40), (x-500, y)]
 
     for i in myList : 
-        pyautogui.moveTo(i, duration = 0.3)
+        pyautogui.moveTo(i, duration = 0.35)
         
 
     pyautogui.mouseUp()
@@ -83,7 +113,7 @@ def monsters_hunt():
 
     pyautogui.moveTo(m,n)
     pyautogui.click()
-
+    time.sleep(1)
     x, y  = monster = pyautogui.locateCenterOnScreen('killthemonster.PNG', confidence=0.9)
 
     while countdown != 10: 
@@ -91,7 +121,7 @@ def monsters_hunt():
         if monster != None: 
             pyautogui.moveTo(x +100, y)
             pyautogui.click(clicks = 700)
-    time.sleep(1.2)
+    time.sleep(2)
 
 
     rebirth()
@@ -114,6 +144,8 @@ def rebirth():
     if (now - count) > 120 : 
         time.sleep(15)
         x, y = pyautogui.locateCenterOnScreen('rebirthtool.PNG' , confidence=0.9)
+        if x == None: 
+            x, y = pyautogui.locateCenterOnScreen('rebirthbig.PNG' , confidence=0.9)
         pyautogui.moveTo(x, y)
         pyautogui.click()
         l, m = pyautogui.locateCenterOnScreen('rebirthbutton.PNG',  confidence=0.9)
@@ -124,7 +156,7 @@ def rebirth():
         pyautogui.click()
         counting()
 
-    #if time.time - x > 600 
+    #if time.time - x > 120 
     #rebirth and follow instructions 
     
 
